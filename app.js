@@ -21,5 +21,8 @@ mongoose.connect(process.env.DB_URI, {
   useCreateIndex: true
 }).then(() => console.log("Connected to database!")).catch((err) => console.log(err));
 
+// routes prefix
+app.use("/api/post", require("./routes/routes"));
+
 // start server
 app.listen(port, () => console.log(`server running at http://localhost:${port}`));
