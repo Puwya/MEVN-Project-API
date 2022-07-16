@@ -42,7 +42,7 @@ module.exports = class API {
     if (req.file) {
       new_image = req.file.filename;
       try {
-        const posting = postingSchema.findById(id);
+        const posting = await postingSchema.findById(id);
         fs.unlinkSync("./uploads/" + posting.image);
       } catch (err) {
         console.log(err);
