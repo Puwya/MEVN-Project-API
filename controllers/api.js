@@ -1,10 +1,10 @@
-const posting = require("../models/posting");
+const postingSchema = require("../models/posting");
 
 module.exports = class API {
   // fetch all posts
   static async fetchAllPostings(req, res) {
     try {
-      const postings = await posting.find();
+      const postings = await postingSchema.find();
       res.status(200).json(postings);
     } catch (err) {
       res.send(404).json({ message: err.message });
@@ -16,7 +16,15 @@ module.exports = class API {
   }
   // Create a Post
   static async createPosting(req, res) {
-    res.send("Create Post");
+    const posting = req.body;
+    const imagename = req.file.filename;
+    postingSchema.image = imagename;
+    try {
+      await postingSchema.create(posting);
+      res.status(201).json({ message: "Post Created Successfully!" })
+    } catch (err) {
+      res.status(400).json({ message: err.message })
+    }
   }
   // Update a Post
   static async updatePosting(req, res) {
